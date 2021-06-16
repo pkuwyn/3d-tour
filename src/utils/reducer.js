@@ -1,15 +1,22 @@
 import React from "react";
 
-export const initialState = { data: [] };
+export const initialState = {
+  data: [],
+  currentInfoId: null,
+  infoDrawerOpen: false,
+};
 
 export function reducer(state, action) {
   switch (action.type) {
     case "init":
       return { ...state, data: action.data };
+    case "setInfoId":
+      return { ...state, currentInfoId: action.data };
+    case "setInfoDrawerOpen":
+      return { ...state, infoDrawerOpen: action.data };
     case "filter":
       return { ...state, data: state.data.filter((item) => item === 1) };
-    case "add_pin":
-      return { ...state, pin: { position: action.position } };
+
     default:
       throw new Error();
   }

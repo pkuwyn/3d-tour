@@ -1,2 +1,3 @@
 export * from "./TileModel";
-export * from "./ClickPositionEvent";
+export * from "./tools";
+export * from "./HotSpotEntity";
