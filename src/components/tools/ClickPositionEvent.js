@@ -40,7 +40,7 @@ export function ClickPositionEvent(props) {
       <ScreenSpaceEvent
         action={(click) => {
           try {
-            const position = scene.pickPosition(click.position);
+            const position = viewer.scene.pickPosition(click.position);
             console.log(JSON.stringify(position).slice(1, -1) + ",");
           } catch (e) {
             console.log(e);

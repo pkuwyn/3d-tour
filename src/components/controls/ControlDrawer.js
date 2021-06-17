@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   infoImage: {
     width: "100%",
+    marginBottom: 8,
   },
   infoTitle: {
     fontWeight: "bold",
@@ -78,6 +79,8 @@ const useStyles = makeStyles((theme) => ({
   },
   infoText: {
     textIndent: "2rem",
+    marginLeft: 8,
+    marginRight: 8,
   },
 }));
 

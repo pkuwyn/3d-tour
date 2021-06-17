@@ -1,2 +1,2 @@
-export * from "./swcConfig";
-// export * from "./dbnjConfig";
+// export * from "./swcConfig";
+export * from "./dbnjConfig";
