@@ -31,7 +31,7 @@ const transformToCartesian3 = ({ x, y, z }) => new Cartesian3(x, y, z);
 
 export const useFlyTo = () => {
   const { camera } = useCesium();
-  const flyTo = ({ targetPosition, cameraPosition }) => {
+  const flyTo = ({ targetPosition, cameraPosition }, complete) => {
     //优先飞行至相机位置
     if (cameraPosition) {
       const flyPosition = {
@@ -43,6 +43,9 @@ export const useFlyTo = () => {
           up: transformToCartesian3(cameraPosition.orientation.up),
         },
       };
+      if (complete) {
+        flyPosition.complete = complete;
+      }
       camera.flyTo(flyPosition);
     }
 
@@ -51,6 +54,9 @@ export const useFlyTo = () => {
         destination: calcCameraFlyTo(targetPosition),
         orientation: cameraFlyToOrientation,
       };
+      if (complete) {
+        flyPosition.complete = complete;
+      }
       camera.flyTo(flyPosition);
     }
   };

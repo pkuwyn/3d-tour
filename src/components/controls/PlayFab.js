@@ -33,18 +33,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PlayFab({ minFlyDuration }) {
+export default function PlayFab(props) {
   const classes = useStyles();
   const { entityCollection } = useCesium();
   const { globalState, dispatch } = useGlobal();
   const flyTo = useFlyTo();
   const [order, setOrder] = React.useState(1);
   const [disabled, setDisabled] = React.useState(false);
-
+  //飞行结束后执行
+  const flyComplete = () => {
+    //打开详情面板
+    dispatch({
+      type: "setInfoDrawerOpen",
+      data: true,
+    });
+    //按钮可以点击
+    setDisabled(false);
+  };
   const handleClick = () => {
     //按钮禁止点击时间
-    let setTimeoutDuration = minFlyDuration;
-
+    //关闭知识点面板
+    dispatch({
+      type: "setInfoDrawerOpen",
+      data: false,
+    });
     //完成学习后重置学习顺序
     if (order > globalState.data.filter(({ order }) => order).length) {
       setOrder(1);
@@ -67,32 +79,25 @@ export default function PlayFab({ minFlyDuration }) {
 
       //存在预设相机位置，飞行至相机位置
       if (data.camera) {
-        flyTo({
-          cameraPosition: data.camera,
-        });
+        flyTo(
+          {
+            cameraPosition: data.camera,
+          },
+          flyComplete
+        );
       } else if (data.x) {
         //没有预设相机位置，飞行至相机位置
         const position = new Cartesian3(data.x, data.y, data.z);
-        flyTo({
-          targetPosition: position,
-        });
-      } else {
-        //无飞行动作，按钮不禁用
-        setTimeoutDuration = 0;
+        flyTo(
+          {
+            targetPosition: position,
+          },
+          flyComplete
+        );
       }
 
       setOrder((state) => state + 1);
       setDisabled(true);
-      setTimeout(() => {
-        setDisabled(false);
-        //打开详情面板
-        if (!globalState.infoDrawerOpen) {
-          dispatch({
-            type: "setInfoDrawerOpen",
-            data: true,
-          });
-        }
-      }, setTimeoutDuration);
     }
   };
   return (

@@ -1,18 +1,17 @@
 import React from "react";
 
 import { Cartesian3, Cartesian2, NearFarScalar } from "cesium";
-import { Entity, LabelGraphics, BillboardGraphics, useCesium } from "resium";
+import { Entity, LabelGraphics, BillboardGraphics } from "resium";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import locationIcon from "../assets/icon/location-red.png";
 
 export function HotSpotEntity({ hotspot }) {
-  const { viewer, scene } = useCesium();
   const { labelName, x, y, z, up, id } = hotspot;
   const matches = useMediaQuery("(min-width:600px)");
 
   const size = 30;
-  const offset = matches ? 25 : 20;
+  const offset = 28;
   const fontSize = matches ? "16px sans-serif" : "14px sans-serif";
   const positionCartesian = new Cartesian3(
     Number(x),

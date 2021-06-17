@@ -109,7 +109,7 @@ const App = () => {
 
             {/* UI elements */}
             <ControlDrawer> </ControlDrawer>
-            <PlayFab minFlyDuration={2000}></PlayFab>
+            <PlayFab></PlayFab>
           </Viewer>
         </>
       ) : null}
@@ -118,5 +118,3 @@ const App = () => {
 };
 
 export default App;
-
-//https://materialdesignicons.com/
