@@ -131,11 +131,12 @@ export function ClickPositionEvent(props) {
               0.8434449478469378
             );
 
-            console.log(
-              position.x - destination.x,
-              position.y - destination.y,
-              position.z - destination.z
-            );
+            // console.log(
+            //   position.x - destination.x,
+            //   position.y - destination.y,
+            //   position.z - destination.z
+            // );
+
             camera.flyTo({
               destination: cameraFlyToPosition,
               orientation: { direction, up },
@@ -148,27 +149,56 @@ export function ClickPositionEvent(props) {
         modifier={KeyboardEventModifier.CTRL}
       />
 
-      {/* 双击测试相机飞行参数 */}
+      {/* ALT+右键 双击获取当前相机参数 */}
       <ScreenSpaceEvent
         action={(click) => {
           try {
             console.log(camera);
-            console.log(` new Cartesian3(
-             ${camera.position.x},
-             ${camera.position.y},
-             ${camera.position.z},
-            )`);
+            const {
+              positionWC: destination,
+              upWC: up,
+              directionWC: direction,
+            } = camera;
 
-            console.log(` new Cartesian3(
-             ${camera.direction.x},
-             ${camera.direction.y},
-             ${camera.direction.z},
-            )`);
-            console.log(` new Cartesian3(
-             ${camera.up.x},
-             ${camera.up.y},
-             ${camera.up.z},
-            )`);
+            // console.log("up", camera.up);
+            // console.log("upWC", camera.upWC);
+            // console.log(` new Cartesian3(
+            //  ${camera.position.x},
+            //  ${camera.position.y},
+            //  ${camera.position.z},
+            // )`);
+
+            // console.log(` new Cartesian3(
+            //  ${camera.direction.x},
+            //  ${camera.direction.y},
+            //  ${camera.direction.z},
+            // )`);
+            // console.log(` new Cartesian3(
+            //  ${camera.up.x},
+            //  ${camera.up.y},
+            //  ${camera.up.z},
+            // )`);
+
+            const cameraPosition = {
+              destination: {
+                x: destination.x,
+                y: destination.y,
+                z: destination.z,
+              },
+              orientation: {
+                direction: {
+                  x: direction.x,
+                  y: direction.y,
+                  z: direction.z,
+                },
+                up: {
+                  x: up.x,
+                  y: up.y,
+                  z: up.z,
+                },
+              },
+            };
+            console.log(JSON.stringify(cameraPosition) + ",");
           } catch (e) {
             console.log(e);
           }
@@ -182,7 +212,7 @@ export function ClickPositionEvent(props) {
         action={(click) => {
           try {
             const position = scene.pickPosition(click.position);
-            flyTo(position);
+            flyTo({ targetPosition: position });
           } catch (e) {
             console.log(e);
           }

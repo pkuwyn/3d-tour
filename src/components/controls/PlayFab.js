@@ -35,31 +35,51 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PlayFab({ minFlyDuration }) {
   const classes = useStyles();
-  const { viewer, entityCollection } = useCesium();
+  const { entityCollection } = useCesium();
   const { globalState, dispatch } = useGlobal();
   const flyTo = useFlyTo();
   const [order, setOrder] = React.useState(1);
   const [disabled, setDisabled] = React.useState(false);
+
   const handleClick = () => {
+    //按钮禁止点击时间
+    let setTimeoutDuration = minFlyDuration;
+
+    //完成学习后重置学习顺序
     if (order > globalState.data.filter(({ order }) => order).length) {
       setOrder(1);
     } else {
+      //获取当前知识点数据
       const data = globalState.data.find(
         ({ order: dataOrder }) => dataOrder === order
       );
-      const currentEntity = entityCollection.getById(data.id);
+
+      // const currentEntity = entityCollection.getById(data.id);
       dispatch({
         type: "setInfoId",
         data: data.id,
       });
 
       // dev
-      console.log(data.id);
-      console.log(globalState);
-      console.log(currentEntity);
+      // console.log(data.id);
+      // console.log(globalState);
+      // console.log(currentEntity);
 
-      const position = new Cartesian3(data.x, data.y, data.z);
-      flyTo(position);
+      //存在预设相机位置，飞行至相机位置
+      if (data.camera) {
+        flyTo({
+          cameraPosition: data.camera,
+        });
+      } else if (data.x) {
+        //没有预设相机位置，飞行至相机位置
+        const position = new Cartesian3(data.x, data.y, data.z);
+        flyTo({
+          targetPosition: position,
+        });
+      } else {
+        //无飞行动作，按钮不禁用
+        setTimeoutDuration = 0;
+      }
 
       setOrder((state) => state + 1);
       setDisabled(true);
@@ -72,7 +92,7 @@ export default function PlayFab({ minFlyDuration }) {
             data: true,
           });
         }
-      }, minFlyDuration);
+      }, setTimeoutDuration);
     }
   };
   return (

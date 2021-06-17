@@ -22,6 +22,7 @@ export const dataUri = `${process.env.REACT_APP_DATA_URI}/swc-data.json`;
 export const tileModelUri =
   "http://archaeology.yungujian.com/demo/swcModelViewer/Scene/swc_cesium.json";
 
+//飞到一个点默认的飞行参数
 export const calcCameraFlyTo = (position) => {
   return new Cartesian3(position.x - 2.46, position.y + 6.3, position.z + 4.5);
 };

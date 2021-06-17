@@ -42,7 +42,7 @@ export function ClickEntityEvent(props) {
             const feature = scene.pick(click.position);
             if (feature.id) {
               const infoId = feature.id._id;
-              console.log(infoId);
+              // console.log(infoId);
               //显示entity内容
               dispatch({
                 type: "setInfoId",

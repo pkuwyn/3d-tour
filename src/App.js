@@ -96,14 +96,16 @@ const App = () => {
             <TileModel url={tileModelUri} />
             <ClickPositionEvent></ClickPositionEvent>
             <ClickEntityEvent></ClickEntityEvent>
-            {globalState.data.map((hotspot) => {
-              return (
-                <HotSpotEntity
-                  hotspot={hotspot}
-                  key={hotspot.id}
-                ></HotSpotEntity>
-              );
-            })}
+            {globalState.data
+              .filter(({ entity }) => entity)
+              .map((hotspot) => {
+                return (
+                  <HotSpotEntity
+                    hotspot={hotspot}
+                    key={hotspot.id}
+                  ></HotSpotEntity>
+                );
+              })}
 
             {/* UI elements */}
             <ControlDrawer> </ControlDrawer>
