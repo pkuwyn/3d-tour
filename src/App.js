@@ -109,7 +109,7 @@ const App = () => {
 
             {/* UI elements */}
             <ControlDrawer> </ControlDrawer>
-            <PlayFab></PlayFab>
+            <PlayFab delayAfterFly={300}></PlayFab>
           </Viewer>
         </>
       ) : null}

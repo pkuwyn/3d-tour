@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down("xs")]: {
       width: "100%",
-      height: "100vh",
+      maxHeight: "100vh",
     },
   },
   drawerPaper: {
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("xs")]: {
       width: "100vw",
-      height: "100vh",
+      maxHeight: "100vh",
     },
   },
   drawerHeader: {

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PlayFab(props) {
+export default function PlayFab({ delayAfterFly }) {
   const classes = useStyles();
   const { entityCollection } = useCesium();
   const { globalState, dispatch } = useGlobal();
@@ -43,12 +43,14 @@ export default function PlayFab(props) {
   //飞行结束后执行
   const flyComplete = () => {
     //打开详情面板
-    dispatch({
-      type: "setInfoDrawerOpen",
-      data: true,
-    });
-    //按钮可以点击
-    setDisabled(false);
+    setTimeout(() => {
+      dispatch({
+        type: "setInfoDrawerOpen",
+        data: true,
+      });
+      //按钮可以点击
+      setDisabled(false);
+    }, delayAfterFly);
   };
   const handleClick = () => {
     //按钮禁止点击时间
